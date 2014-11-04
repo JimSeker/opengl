@@ -3,7 +3,9 @@ OpenGl Examples
 
 OpenGL 1.1 examples
   OpenGLDemo is a very basic framework that draws a 2d square
-  openGL  show a triagle, cube, and lighting
+
+  OpenGL  show a triagle, cube, and lighting
+
   BouncyCube, solarSystem, and Vortex  show moving and touch event with the onpengl.
   
 OpenGL 2.0 examples
