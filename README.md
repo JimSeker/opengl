@@ -1,5 +1,7 @@
 OpenGl Examples
 ===========
+eclipse/ has the examples that eclipse can load (no longer updated).  Otherwise, in andriod studio.
+
 
 OpenGL 1.1 examples
 
