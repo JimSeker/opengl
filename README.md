@@ -12,7 +12,7 @@ eclipse/ has the examples that eclipse can load (no longer updated).  Otherwise,
 
   <b>Opengl2ex2</b>  extends a GLsurfaceView to setup everything.  Again, use the Lessonone renderer.
 
-<h3>OpenGL 3.0 examples</h3> are intended to get you started in OpenGL 3.0, but don't provide any depth of coverage.
+<h3>OpenGL 3.0 examples</h3> intended to get you started in OpenGL 3.0, but don't provide any depth of coverage.
 
 <b>HelloOpenGLES30</b> is google's basic framework example from 20, updated to opengl3.0.  2D square and triangle with touch events to spin the triangle
 
