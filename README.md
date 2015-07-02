@@ -22,5 +22,7 @@ eclipse/ has the examples that eclipse can load (no longer updated).  Otherwise,
 
 <b>Opengl3ex3</b> is from the OpenGL ES 3.0 Programing Guide, which can be found here: http://opengles-book.com/samplecode.html
 
+<b>OpenGL30Cube</b> is Cube that spins and uses touchlistner to move up/down left/right.
+
 These are example code for University of Wyoming, Cosc 4730 Mobile Programming course.
 All examples are for Android.
