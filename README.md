@@ -24,5 +24,8 @@ eclipse/ has the examples that eclipse can load (no longer updated).  Otherwise,
 
 <b>OpenGL30Cube</b> is Cube that spins and uses touchlistener to move up/down left/right.
 
+<b>OpenGL30CubeTextureView</b> is the same renderer as OpenGL30Cube, except this uses a TextureView instead of surfaceView.  
+The TextureView has to setup all the openGL stuff, which takes a chunk of code todo.
+
 These are example code for University of Wyoming, Cosc 4730 Mobile Programming course.
 All examples are for Android.
