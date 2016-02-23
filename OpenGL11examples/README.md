@@ -1,6 +1,6 @@
 OpenGl 1.1 Examples
 ===========
-  These example are only for 1.1<BR>
+  These example are only for 1.1 and will no longer be updated.<BR>
 
 <b>OpenGLDemo</b> is a very basic framework that draws a 2d square
 
