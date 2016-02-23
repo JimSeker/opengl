@@ -14,7 +14,7 @@ eclipse/ has the examples that eclipse can load (no longer updated).  Otherwise,
 
 <h3>OpenGL 3.0 examples</h3> intended to get you started in OpenGL 3.0, but don't provide any depth of coverage.
 
-<b>HelloOpenGLES30</b> is Google’s basic framework example from 20, updated to opengl3.0.  2D square and triangle with touch events to spin the triangle
+<b>HelloOpenGLES30</b> is Google’s basic framework example from 2.0, updated to opengl3.0.  2D square and triangle with touch events to spin the triangle
 
 <b>Opengl3ex1</b> is based on Opengl2ex1, with references changed to GLES30.  Note this may fail in emulators.
   
@@ -24,8 +24,7 @@ eclipse/ has the examples that eclipse can load (no longer updated).  Otherwise,
 
 <b>OpenGL30Cube</b> is Cube that spins and uses touchlistener to move up/down left/right.
 
-<b>OpenGL30CubeTextureView</b> is the same renderer as OpenGL30Cube, except this uses a TextureView instead of surfaceView.  
-The TextureView has to setup all the openGL stuff, which takes a chunk of code todo.
+<b>OpenGL30CubeTextureView</b> is the same renderer as OpenGL30Cube, except this uses a TextureView instead of surfaceView.  The TextureView has to setup all the openGL stuff, which takes a chunk of code to do.
 
 These are example code for University of Wyoming, Cosc 4730 Mobile Programming course.
 All examples are for Android.
