@@ -11,7 +11,7 @@ import android.view.Window;
 
 /*
  * This example use openGL v3.0
- *    this is based off of opengl2ex1 since 3.0 is backward compatable.
+ *    this is based off of opengl2ex1 since 3.0 is backward compatible.
  *
  *  The render code is based off
  *   This code is based off of http://www.learnopengles.com/android-lesson-one-getting-started/
