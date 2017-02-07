@@ -1,6 +1,6 @@
 package edu.cs4730.opengl30cubetextureview;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
@@ -11,10 +11,10 @@ import android.util.Log;
  *  This is a example of a cube that rotates and moves.
  *
  *  The code here, simply makes sure that opengl 3.0 is available and starts up
- *  the the surfaceview class I extended.
+ *  the TextureView class I extended.
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     myGLTextureView mGLTextureView;
 
