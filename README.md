@@ -30,7 +30,7 @@ eclipse/ has the examples that eclipse can load (no longer updated).  Otherwise,
 
 <b>HelloOpenGLES31</b> is Google’s basic framework example from 2.0, updated to OpenGL ES 3.1.  2D square and triangle with touch events to spin the triangle.  The setEGLContextClientVersion(3);  maybe wrong, since I could not find how to set it for 3.1. All other entries are set correctly.  API 21+
 
-<b>HelloOpenGLES31</b> is Google’s basic framework example from 2.0, updated to OpenGL ES 3.2.  2D square and triangle with touch events to spin the triangle.  The setEGLContextClientVersion(3);  maybe wrong, since I could not find how to set it for 3.2.  All other entries are set correctly.  API 24+
+<b>HelloOpenGLES32</b> is Google’s basic framework example from 2.0, updated to OpenGL ES 3.2.  2D square and triangle with touch events to spin the triangle.  The setEGLContextClientVersion(3);  maybe wrong, since I could not find how to set it for 3.2.  All other entries are set correctly.  API 24+
 
 
 These are example code for University of Wyoming, Cosc 4730 Mobile Programming course.
