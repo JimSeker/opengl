@@ -1,15 +1,21 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
-    }
-}
+apply plugin: 'com.android.application'
 
-allprojects {
-    repositories {
-        jcenter()
+android {
+    compileSdkVersion defaultCompileSdkVersion
+    buildToolsVersion defaultBuildToolsVersion
+
+    defaultConfig {
+        applicationId "com.androidbook.opengl"
+        minSdkVersion 8
+        targetSdkVersion defaultTargetSdkVersion
+        versionCode="3"
+        versionName="1.0.2"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
     }
 }
