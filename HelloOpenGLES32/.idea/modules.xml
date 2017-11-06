@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HelloOpenGLES32.iml" filepath="$PROJECT_DIR$/HelloOpenGLES32.iml" />
+      <module fileurl="file://C:\Users\seker\git\opengl\HelloOpenGLES32\HelloOpenGLES32.iml" filepath="C:\Users\seker\git\opengl\HelloOpenGLES32\HelloOpenGLES32.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\seker\git\opengl\HelloOpenGLES32\app\app.iml" filepath="C:\Users\seker\git\opengl\HelloOpenGLES32\app\app.iml" />
     </modules>
   </component>
 </project>
