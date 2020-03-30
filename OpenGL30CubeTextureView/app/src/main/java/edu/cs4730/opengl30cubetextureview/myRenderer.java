@@ -107,7 +107,9 @@ public class myRenderer implements GLSurfaceView.Renderer {
 
 
         //set the clear buffer color to light gray.
-        GLES30.glClearColor(0.9f, .9f, 0.9f, 0.9f);
+       // GLES30.glClearColor(0.9f, .9f, 0.9f, 0.9f);
+        //set the clear buffer color to a dark grey.
+        GLES30.glClearColor(0.1f, .1f, 0.1f, 0.9f);
         //initialize the cube code for drawing.
         mCube = new Cube();
         //if we had other objects setup them up here as well.

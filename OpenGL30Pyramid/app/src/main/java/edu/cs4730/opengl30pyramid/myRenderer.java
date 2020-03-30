@@ -94,7 +94,9 @@ public class myRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
         //set the clear buffer color to light gray.
-        GLES30.glClearColor(0.9f, .9f, 0.9f, 0.9f);
+        //GLES30.glClearColor(0.9f, .9f, 0.9f, 0.9f);
+        //set the clear buffer color to a dark gray
+        GLES30.glClearColor(0.1f, .1f, 0.1f, 1.0f);
         //initialize the cube code for drawing.
         mPyramid = new Pyramid();
         //if we had other objects setup them up here as well.
