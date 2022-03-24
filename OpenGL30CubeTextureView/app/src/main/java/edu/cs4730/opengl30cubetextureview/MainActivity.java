@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();  // Always call the superclass method first
 
-        if (mGLTextureView.isRunning == false) {
+        if (!mGLTextureView.isRunning) {
             //everything is closed down and we have problem.  Restart
             mGLTextureView = new myGLTextureView(this);
             mGLTextureView.setRenderer(new myRenderer(this));

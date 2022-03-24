@@ -10,7 +10,7 @@ import android.opengl.GLSurfaceView;
 import android.view.View;
 
 
-/*
+/**
  * This example use openGL v3.0
  *    this is based off of opengl2ex1 since 3.0 is backward compatible.
  *
