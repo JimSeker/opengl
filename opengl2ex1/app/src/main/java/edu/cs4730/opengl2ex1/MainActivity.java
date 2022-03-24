@@ -8,7 +8,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.Window;
 
-/*
+/**
  * This example use openGL v2.0  
  *   It creates a render, instead of extending the GLSurfaceView 
  *         see ex2 for and extended GLsurfaceView

@@ -77,7 +77,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
                         ((dx + dy) * TOUCH_SCALE_FACTOR));  // = 180.0f / 320
                 requestRender();
         }
-
         mPreviousX = x;
         mPreviousY = y;
         return true;
