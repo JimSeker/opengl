@@ -63,12 +63,12 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 float dy = y - mPreviousY;
 
                 // reverse direction of rotation above the mid-line
-                if (y > getHeight() / 2) {
+                if (y > getHeight() / 2f) {
                     dx = dx * -1 ;
                 }
 
                 // reverse direction of rotation to left of the mid-line
-                if (x < getWidth() / 2) {
+                if (x < getWidth() / 2f) {
                     dy = dy * -1 ;
                 }
 
