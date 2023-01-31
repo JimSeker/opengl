@@ -13,7 +13,7 @@ import android.opengl.Matrix;
 import android.os.SystemClock;
 
 /**
- * This class implements our custom renderer. Note that the GL10 parameter passed in is unused for OpenGL ES 2.0
+ * This class implements our custom renderer. Note that the GL10 parameter passed in is unused for OpenGL ES 3.0
  * renderers -- the static class GLES20 is used instead.
  *
  *
@@ -163,13 +163,13 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 		Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
 		final String vertexShader =
-
-		 	"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
+			"#version 300 es                \n"    //set the version.
+		  +	"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
 			
-		  + "attribute vec4 a_Position;     \n"		// Per-vertex position information we will pass in.
-		  + "attribute vec4 a_Color;        \n"		// Per-vertex color information we will pass in.			  
+		  + "in vec4 a_Position;            \n"		// Per-vertex position information we will pass in.
+		  + "in vec4 a_Color;               \n"		// Per-vertex color information we will pass in.
 		  
-		  + "varying vec4 v_Color;          \n"		// This will be passed into the fragment shader.
+		  + "out vec4 v_Color;              \n"		// This will be passed into the fragment shader.
 		  
 		  + "void main()                    \n"		// The entry point for our vertex shader.
 		  + "{                              \n"
@@ -180,11 +180,12 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 		  + "}                              \n";    // normalized screen coordinates.
 		
 		final String fragmentShader =
-
-		  	"precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
+			"#version 300 es                \n"    //set the version.
+		  +	"precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
 													// precision in the fragment shader.				
-		  + "varying vec4 v_Color;          \n"		// This is the color from the vertex shader interpolated across the 
-		  											// triangle per fragment.			  
+		  + "in vec4 v_Color;               \n"		// This is the color from the vertex shader interpolated across the
+		  											// triangle per fragment.
+		  + "out vec4 gl_FragColor;         \n"
 		  + "void main()                    \n"		// The entry point for our fragment shader.
 		  + "{                              \n"
 		  + "   gl_FragColor = v_Color;     \n"		// Pass the color directly through the pipeline.		  
