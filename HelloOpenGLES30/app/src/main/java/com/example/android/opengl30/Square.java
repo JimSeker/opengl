@@ -23,32 +23,28 @@ import java.nio.ShortBuffer;
 import android.opengl.GLES30;
 
 /**
- * A two-dimensional square for use as a drawn object in OpenGL ES 3.1.
- * I actually can get 3.0 to work.  confusing.
+ * A two-dimensional square for use as a drawn object in OpenGL ES 3.0.
  */
 public class Square {
 
     private final String vertexShaderCode =
-            // This matrix member variable provides a hook to manipulate
-            // the coordinates of the objects that use this vertex shader
-            "#version 310 es\n"+
-            "uniform mat4 uMVPMatrix;\n" +
-            "in vec4 vPosition;\n" +
-            "void main() {\n" +
-            // The matrix must be included as a modifier of gl_Position.
-            // Note that the uMVPMatrix factor *must be first* in order
-            // for the matrix multiplication product to be correct.
-            "  gl_Position = uMVPMatrix * vPosition;\n" +
-            "}\n";
+        "#version 300 es 			  \n"
+            + "uniform mat4 uMVPMatrix;     \n"
+            + "in vec4 vPosition;           \n"
+            + "void main()                  \n"
+            + "{                            \n"
+            + "   gl_Position = uMVPMatrix * vPosition;  \n"
+            + "}                            \n";
 
     private final String fragmentShaderCode =
-        "#version 310 es \n"+
-            "precision mediump float; \n" +
-            "in uniform vec4 vColor;\n" +
-            "out vec4 gl_FragColor;\n" +
-            "void main() {\n" +
-            "  gl_FragColor = vColor;\n" +
-            "}\n";
+        "#version 300 es		 			          	\n"
+            + "precision mediump float;					  	\n"
+            + "uniform vec4 vColor;	 			 		  	\n"
+            + "out vec4 fragColor;	 			 		  	\n"
+            + "void main()                                  \n"
+            + "{                                            \n"
+            + "  fragColor = vColor;                    	\n"
+            + "}                                            \n";
 
     private final FloatBuffer vertexBuffer;
     private final ShortBuffer drawListBuffer;
