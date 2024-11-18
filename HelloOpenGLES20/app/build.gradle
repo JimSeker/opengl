@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.example.android.opengl"
-        minSdkVersion 26
-        targetSdkVersion 33
+        minSdkVersion 29
+        targetSdk 35
         versionCode 1
         versionName "1.0"
     }
@@ -17,8 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+    namespace 'com.example.android.opengl'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.activity:activity:1.9.3")
 }
