@@ -22,7 +22,7 @@ import java.nio.FloatBuffer;
 import android.opengl.GLES30;
 
 /**
- * A two-dimensional triangle for use as a drawn object in OpenGL ES 3.1
+ * A two-dimensional triangle for use as a drawn object in OpenGL ES 3.0
  *
  * actually fails with the 300.  I do not have a clue what it doesn't work.
  */
@@ -31,7 +31,7 @@ public class Triangle {
     private final String vertexShaderCode =
         // This matrix member variable provides a hook to manipulate
         // the coordinates of the objects that use this vertex shader
-        "#version 310 es\n"+
+        "#version 300 es\n"+
         "uniform mat4 uMVPMatrix;\n" +
             "in vec4 vPosition;\n" +
             "void main() {\n" +

@@ -23,9 +23,9 @@ intended to get you started in OpenGL 3.0, but don't provide any depth of covera
 
 `HelloOpenGLES30` is Google’s basic framework example from 2.0, updated to OpenGL ES 3.0.  2D square and triangle with touch events to spin the triangle.  API 18+
 
-`Opengl3ex1` is based on Opengl2ex1, with references changed to GLES30.  Note this may fail in emulators.
+`Opengl3ex1` is based on Opengl2ex1, with references changed to GLES30.  Note this may fail in emulators. 
   
-`Opengl3ex2` is based on Opengl2ex2, again with references changed. Note this may fail in emulators.
+`Opengl3ex2` is based on Opengl2ex2, again with references changed. Note this may fail in emulators. 
 
 `Opengl3ex3` is from the OpenGL ES 3.0 Programing Guide, which can be found here: http://opengles-book.com/samplecode.html
 
@@ -35,10 +35,10 @@ intended to get you started in OpenGL 3.0, but don't provide any depth of covera
 
 `OpenGL30CubeTextureView` is the same renderer as OpenGL30Cube, except this uses a TextureView instead of surfaceView.  The TextureView has to setup all the openGL stuff, which takes a chunk of code to do.
 
-`HelloOpenGLES31` is Google’s basic framework example from 2.0, updated to OpenGL ES 3.1.  2D square and triangle with touch events to spin the triangle.  The setEGLContextClientVersion(3);  maybe wrong, since I could not find how to set it for 3.1. All other entries are set correctly.  API 21+
+`HelloOpenGLES31` is Google’s basic framework example from 2.0, updated to OpenGL ES 3.1.  2D square and triangle with touch events to spin the triangle.  The setEGLContextClientVersion(3);  maybe wrong, since I could not find how to set it for 3.1. All other entries are set correctly.  API 21+   Also doesn't work on android 15 on a pixel 7 or 8.  does work on pixel 4a with android 13.
 
-`HelloOpenGLES32` is Google’s basic framework example from 2.0, updated to OpenGL ES 3.2.  2D square and triangle with touch events to spin the triangle.  The setEGLContextClientVersion(3);  maybe wrong, since I could not find how to set it for 3.2.  All other entries are set correctly.  API 24+
-
+`HelloOpenGLES32` is Google’s basic framework example from 2.0, updated to OpenGL ES 3.2.  2D square and triangle with touch events to spin the triangle.  The setEGLContextClientVersion(3);  maybe wrong, since I could not find how to set it for 3.2.  All other entries are set correctly.  API 24+   Also doesn't work on android 15 on a pixel 7 or 8.  does work on pixel 4a with android 13.
+ 
 ---
 
 These are example code for University of Wyoming, Cosc 4730 Mobile Programming course and cosc 4735 Advance Mobile Programing course. 

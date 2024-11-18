@@ -22,14 +22,16 @@ import java.nio.FloatBuffer;
 import android.opengl.GLES31;
 
 /**
- * A two-dimensional triangle for use as a drawn object in OpenGL ES 2.0.
+ * A two-dimensional triangle for use as a drawn object in OpenGL ES 3.1
+ *
+ * note, this is not supported on pixel 7 or 8 with android 15, but works on a pixel 4a.
  */
 public class Triangle {
 
     private final String vertexShaderCode =
-            // This matrix member variable provides a hook to manipulate
-            // the coordinates of the objects that use this vertex shader
-        "#version 310 es\n"+
+        // This matrix member variable provides a hook to manipulate
+        // the coordinates of the objects that use this vertex shader
+        "#version 300 es\n"+
             "uniform mat4 uMVPMatrix;\n" +
             "in vec4 vPosition;\n" +
             "void main() {\n" +
@@ -57,15 +59,15 @@ public class Triangle {
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
     static float triangleCoords[] = {
-            // in counterclockwise order:
-            0.0f,  0.622008459f, 0.0f,   // top
-           -0.5f, -0.311004243f, 0.0f,   // bottom left
-            0.5f, -0.311004243f, 0.0f    // bottom right
+        // in counterclockwise order:
+        0.0f, 0.622008459f, 0.0f,   // top
+        -0.5f, -0.311004243f, 0.0f,   // bottom left
+        0.5f, -0.311004243f, 0.0f    // bottom right
     };
     private final int vertexCount = triangleCoords.length / COORDS_PER_VERTEX;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
+    float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 0.0f};
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
@@ -73,8 +75,8 @@ public class Triangle {
     public Triangle() {
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
-                // (number of coordinate values * 4 bytes per float)
-                triangleCoords.length * 4);
+            // (number of coordinate values * 4 bytes per float)
+            triangleCoords.length * 4);
         // use the device hardware's native byte order
         bb.order(ByteOrder.nativeOrder());
 
@@ -87,9 +89,9 @@ public class Triangle {
 
         // prepare shaders and OpenGL program
         int vertexShader = MyGLRenderer.loadShader(
-                GLES31.GL_VERTEX_SHADER, vertexShaderCode);
+            GLES31.GL_VERTEX_SHADER, vertexShaderCode);
         int fragmentShader = MyGLRenderer.loadShader(
-                GLES31.GL_FRAGMENT_SHADER, fragmentShaderCode);
+            GLES31.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
         mProgram = GLES31.glCreateProgram();             // create empty OpenGL Program
         GLES31.glAttachShader(mProgram, vertexShader);   // add the vertex shader to program
@@ -102,7 +104,7 @@ public class Triangle {
      * Encapsulates the OpenGL ES instructions for drawing this shape.
      *
      * @param mvpMatrix - The Model View Project matrix in which to draw
-     * this shape.
+     *                  this shape.
      */
     public void draw(float[] mvpMatrix) {
         // Add program to OpenGL environment
@@ -116,9 +118,9 @@ public class Triangle {
 
         // Prepare the triangle coordinate data
         GLES31.glVertexAttribPointer(
-                mPositionHandle, COORDS_PER_VERTEX,
-                GLES31.GL_FLOAT, false,
-                vertexStride, vertexBuffer);
+            mPositionHandle, COORDS_PER_VERTEX,
+            GLES31.GL_FLOAT, false,
+            vertexStride, vertexBuffer);
 
         // get handle to fragment shader's vColor member
         mColorHandle = GLES31.glGetUniformLocation(mProgram, "vColor");

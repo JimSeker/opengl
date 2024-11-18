@@ -25,6 +25,8 @@ import android.view.View;
 /*
  * There is not much here, but at the bottom, it setups immersive Mode, so that only the app
  * shows, and the use needs to swipe up from the bottom to get the navigation buttons to appear.
+ *
+ * Note this owkrs on a pixel4a, but doesn't work on pixel 7 or 8 running android 15.
  */
 
 public class MainActivity extends Activity {
