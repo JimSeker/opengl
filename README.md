@@ -8,12 +8,12 @@ OpenGl Examples
 
 **OpenGL 2.0 examples:**
 
-`HelloOpenGLES20` is Google’s basic framework example.  2D square and triangle with touch events to spin the triangle  API 8+
+`HelloOpenGLES20` is Google’s basic framework example.  2D square and triangle with touch events to spin the triangle  API 8+ and works on android 15 devices.
 
 `Opengl2ex1`  uses a renderer (lessonOne from http://www.learnopengles.com/android-lesson-one-getting-started/) and mainactivity to setup everything
-    NOTE: this example may fail in the emulators, but works on a physical device.
+    NOTE: this example may fail in the emulators, but works on a physical device.  verified it works on android 15 devices.
 
-`Opengl2ex2`  extends a GLsurfaceView to setup everything.  Again, use the Lessonone renderer.
+`Opengl2ex2`  extends a GLsurfaceView to setup everything.  Again, use the Lessonone renderer.  verified works on android 15 devices.
 
 ---
 
