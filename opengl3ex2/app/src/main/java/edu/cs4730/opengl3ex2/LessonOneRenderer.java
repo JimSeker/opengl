@@ -22,7 +22,11 @@ import android.os.SystemClock;
  *
  * This code has been changed to use GLES30 instead of GLES20 to setup a render for 3.0 instead of 2.0
  *  Otherwise it remains unchanged.
- *   JW  3/18/15
+ *  JW  3/18/15
+ *  Nov 2024, code works fine on pixel 4a, with android 13, fails pixel 7 and 8 with android 15
+ *       using the GLES20 code from the example everything works.  but the updated 300 code fails on newer devices
+ *       I have no clue why.
+ *      But at this point, opengl is no longer primary graphics library, Vulkan is as it has better performance.
  *
  */
 public class LessonOneRenderer implements GLSurfaceView.Renderer 
@@ -172,33 +176,61 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 		Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
 		final String vertexShader =
-			"#version 300 es                \n"    //set the version.
-		  +	"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
-			
-		  + "in vec4 a_Position;            \n"		// Per-vertex position information we will pass in.
-		  + "in vec4 a_Color;               \n"		// Per-vertex color information we will pass in.
-		  
-		  + "out vec4 v_Color;              \n"		// This will be passed into the fragment shader.
-		  
-		  + "void main()                    \n"		// The entry point for our vertex shader.
-		  + "{                              \n"
-		  + "   v_Color = a_Color;          \n"		// Pass the color through to the fragment shader. 
-		  											// It will be interpolated across the triangle.
-		  + "   gl_Position = u_MVPMatrix   \n" 	// gl_Position is a special variable used to store the final position.
-		  + "               * a_Position;   \n"     // Multiply the vertex by the matrix to get the final point in 			                                            			 
-		  + "}                              \n";    // normalized screen coordinates.
-		
+			//works on android 15, it's the v2 code.
+			"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
+
+				+ "attribute vec4 a_Position;     \n"		// Per-vertex position information we will pass in.
+				+ "attribute vec4 a_Color;        \n"		// Per-vertex color information we will pass in.
+
+				+ "varying vec4 v_Color;          \n"		// This will be passed into the fragment shader.
+
+				+ "void main()                    \n"		// The entry point for our vertex shader.
+				+ "{                              \n"
+				+ "   v_Color = a_Color;          \n"		// Pass the color through to the fragment shader.
+				// It will be interpolated across the triangle.
+				+ "   gl_Position = u_MVPMatrix   \n" 	// gl_Position is a special variable used to store the final position.
+				+ "               * a_Position;   \n"     // Multiply the vertex by the matrix to get the final point in
+				+ "}                              \n";    // normalized screen coordinates.
+
+		//works on a pixel4a running android 13, but fails on 15 (on pixel 7 and 8 devices).
+//			"#version 300 es                \n"    //set the version.
+//		  +	"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
+//
+//		  + "in vec4 a_Position;            \n"		// Per-vertex position information we will pass in.
+//		  + "in vec4 a_Color;               \n"		// Per-vertex color information we will pass in.
+//
+//		  + "out vec4 v_Color;              \n"		// This will be passed into the fragment shader.
+//
+//		  + "void main()                    \n"		// The entry point for our vertex shader.
+//		  + "{                              \n"
+//		  + "   v_Color = a_Color;          \n"		// Pass the color through to the fragment shader.
+//		  											// It will be interpolated across the triangle.
+//		  + "   gl_Position = u_MVPMatrix   \n" 	// gl_Position is a special variable used to store the final position.
+//		  + "               * a_Position;   \n"     // Multiply the vertex by the matrix to get the final point in
+//		  + "}                              \n";    // normalized screen coordinates.
+//
 		final String fragmentShader =
-			"#version 300 es                \n"    //set the version.
-		  +	"precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
-													// precision in the fragment shader.
-		  + "in vec4 v_Color;               \n"		// This is the color from the vertex shader interpolated across the
-		  											// triangle per fragment.
-		  + "out vec4 gl_FragColor;         \n"
-		  + "void main()                    \n"		// The entry point for our fragment shader.
-		  + "{                              \n"
-		  + "   gl_FragColor = v_Color;     \n"		// Pass the color directly through the pipeline.
-		  + "}                              \n";
+			//works on android 15, it's the v2 code.
+			"precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
+				// precision in the fragment shader.
+				+ "varying vec4 v_Color;          \n"		// This is the color from the vertex shader interpolated across the
+				// triangle per fragment.
+				+ "void main()                    \n"		// The entry point for our fragment shader.
+				+ "{                              \n"
+				+ "   gl_FragColor = v_Color;     \n"		// Pass the color directly through the pipeline.
+				+ "}                              \n";
+
+		//works on a pixel4a running android 13, but fails on 15 (on pixel 7 and 8 devices).
+//			"#version 300 es                \n"    //set the version.
+//		  +	"precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
+//													// precision in the fragment shader.
+//		  + "in vec4 v_Color;               \n"		// This is the color from the vertex shader interpolated across the
+//		  											// triangle per fragment.
+//		  + "out vec4 gl_FragColor;         \n"
+//		  + "void main()                    \n"		// The entry point for our fragment shader.
+//		  + "{                              \n"
+//		  + "   gl_FragColor = v_Color;     \n"		// Pass the color directly through the pipeline.
+//		  + "}                              \n";
 
 		// Load in the vertex shader.
 		int vertexShaderHandle = GLES30.glCreateShader(GLES30.GL_VERTEX_SHADER);

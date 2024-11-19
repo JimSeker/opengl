@@ -23,9 +23,13 @@ import android.os.SystemClock;
  * This code has been changed to use GLES30 instead of GLES20 to setup a render for 3.0 instead of 2.0
  *  Otherwise it remains unchanged.
  *   JW  3/18/15
+ *   Nov 2024, code works fine on pixel 4a, with android 13, fails pixel 7 and 8 with android 15
+ *         using the GLES20 code from the example everything works.  but the updated 300 code fails on newer devices
+ *         I have no clue why.
+ *     But at this point, opengl is no longer primary graphics library, Vulkan is as it has better performance.
  *
  */
-public class LessonOneRenderer implements GLSurfaceView.Renderer 
+public class LessonOneRenderer implements GLSurfaceView.Renderer
 {
 	/**
 	 * Store the model matrix. This matrix is used to move models from object space (where each model can be thought
@@ -41,10 +45,10 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 
 	/** Store the projection matrix. This is used to project the scene onto a 2D viewport. */
 	private float[] mProjectionMatrix = new float[16];
-	
+
 	/** Allocate storage for the final combined matrix. This will be passed into the shader program. */
 	private float[] mMVPMatrix = new float[16];
-	
+
 	/** Store our model data in a float buffer. */
 	private final FloatBuffer mTriangle1Vertices;
 	private final FloatBuffer mTriangle2Vertices;
@@ -52,77 +56,77 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 
 	/** This will be used to pass in the transformation matrix. */
 	private int mMVPMatrixHandle;
-	
+
 	/** This will be used to pass in model position information. */
 	private int mPositionHandle;
-	
+
 	/** This will be used to pass in model color information. */
 	private int mColorHandle;
 
 	/** How many bytes per float. */
 	private final int mBytesPerFloat = 4;
-	
+
 	/** How many elements per vertex. */
-	private final int mStrideBytes = 7 * mBytesPerFloat;	
-	
+	private final int mStrideBytes = 7 * mBytesPerFloat;
+
 	/** Offset of the position data. */
 	private final int mPositionOffset = 0;
-	
+
 	/** Size of the position data in elements. */
 	private final int mPositionDataSize = 3;
-	
+
 	/** Offset of the color data. */
 	private final int mColorOffset = 3;
-	
+
 	/** Size of the color data in elements. */
-	private final int mColorDataSize = 4;		
-				
+	private final int mColorDataSize = 4;
+
 	/**
 	 * Initialize the model data.
 	 */
 	public LessonOneRenderer()
-	{	
+	{
 		// Define points for equilateral triangles.
-		
+
 		// This triangle is red, green, and blue.
 		final float[] triangle1VerticesData = {
-				// X, Y, Z, 
+				// X, Y, Z,
 				// R, G, B, A
-	            -0.5f, -0.25f, 0.0f, 
+	            -0.5f, -0.25f, 0.0f,
 	            1.0f, 0.0f, 0.0f, 1.0f,
-	            
+
 	            0.5f, -0.25f, 0.0f,
 	            0.0f, 0.0f, 1.0f, 1.0f,
-	            
-	            0.0f, 0.559016994f, 0.0f, 
+
+	            0.0f, 0.559016994f, 0.0f,
 	            0.0f, 1.0f, 0.0f, 1.0f};
-		
+
 		// This triangle is yellow, cyan, and magenta.
 		final float[] triangle2VerticesData = {
-				// X, Y, Z, 
+				// X, Y, Z,
 				// R, G, B, A
-	            -0.5f, -0.25f, 0.0f, 
+	            -0.5f, -0.25f, 0.0f,
 	            1.0f, 1.0f, 0.0f, 1.0f,
-	            
-	            0.5f, -0.25f, 0.0f, 
+
+	            0.5f, -0.25f, 0.0f,
 	            0.0f, 1.0f, 1.0f, 1.0f,
-	            
-	            0.0f, 0.559016994f, 0.0f, 
+
+	            0.0f, 0.559016994f, 0.0f,
 	            1.0f, 0.0f, 1.0f, 1.0f};
-		
+
 		// This triangle is white, gray, and black.
 		final float[] triangle3VerticesData = {
-				// X, Y, Z, 
+				// X, Y, Z,
 				// R, G, B, A
-	            -0.5f, -0.25f, 0.0f, 
+	            -0.5f, -0.25f, 0.0f,
 	            1.0f, 1.0f, 1.0f, 1.0f,
-	            
-	            0.5f, -0.25f, 0.0f, 
+
+	            0.5f, -0.25f, 0.0f,
 	            0.5f, 0.5f, 0.5f, 1.0f,
-	            
-	            0.0f, 0.559016994f, 0.0f, 
+
+	            0.0f, 0.559016994f, 0.0f,
 	            0.0f, 0.0f, 0.0f, 1.0f};
-		
+
 		// Initialize the buffers.
 		mTriangle1Vertices = ByteBuffer.allocateDirect(triangle1VerticesData.length * mBytesPerFloat)
         .order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -130,18 +134,18 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
         .order(ByteOrder.nativeOrder()).asFloatBuffer();
 		mTriangle3Vertices = ByteBuffer.allocateDirect(triangle3VerticesData.length * mBytesPerFloat)
         .order(ByteOrder.nativeOrder()).asFloatBuffer();
-					
+
 		mTriangle1Vertices.put(triangle1VerticesData).position(0);
 		mTriangle2Vertices.put(triangle2VerticesData).position(0);
 		mTriangle3Vertices.put(triangle3VerticesData).position(0);
 	}
-	
+
 	@Override
-	public void onSurfaceCreated(GL10 glUnused, EGLConfig config) 
+	public void onSurfaceCreated(GL10 glUnused, EGLConfig config)
 	{
 		// Set the background clear color to gray.
 		GLES30.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
-	
+
 		// Position the eye behind the origin.
 		final float eyeX = 0.0f;
 		final float eyeY = 0.0f;
@@ -163,38 +167,66 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 		Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
 		final String vertexShader =
-			"#version 300 es                \n"    //set the version.
-		  +	"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
-			
-		  + "in vec4 a_Position;            \n"		// Per-vertex position information we will pass in.
-		  + "in vec4 a_Color;               \n"		// Per-vertex color information we will pass in.
-		  
-		  + "out vec4 v_Color;              \n"		// This will be passed into the fragment shader.
-		  
-		  + "void main()                    \n"		// The entry point for our vertex shader.
-		  + "{                              \n"
-		  + "   v_Color = a_Color;          \n"		// Pass the color through to the fragment shader. 
-		  											// It will be interpolated across the triangle.
-		  + "   gl_Position = u_MVPMatrix   \n" 	// gl_Position is a special variable used to store the final position.
-		  + "               * a_Position;   \n"     // Multiply the vertex by the matrix to get the final point in 			                                            			 
-		  + "}                              \n";    // normalized screen coordinates.
-		
+			//works on android 15, it's the v2 code.
+			"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
+
+				+ "attribute vec4 a_Position;     \n"		// Per-vertex position information we will pass in.
+				+ "attribute vec4 a_Color;        \n"		// Per-vertex color information we will pass in.
+
+				+ "varying vec4 v_Color;          \n"		// This will be passed into the fragment shader.
+
+				+ "void main()                    \n"		// The entry point for our vertex shader.
+				+ "{                              \n"
+				+ "   v_Color = a_Color;          \n"		// Pass the color through to the fragment shader.
+				// It will be interpolated across the triangle.
+				+ "   gl_Position = u_MVPMatrix   \n" 	// gl_Position is a special variable used to store the final position.
+				+ "               * a_Position;   \n"     // Multiply the vertex by the matrix to get the final point in
+				+ "}                              \n";    // normalized screen coordinates.
+
+		//works on a pixel4a running android 13, but fails on 15 (on pixel 7 and 8 devices).
+//			"#version 300 es                \n"    //set the version.
+//		  +	"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
+//
+//		  + "in vec4 a_Position;            \n"		// Per-vertex position information we will pass in.
+//		  + "in vec4 a_Color;               \n"		// Per-vertex color information we will pass in.
+//
+//		  + "out vec4 v_Color;              \n"		// This will be passed into the fragment shader.
+//
+//		  + "void main()                    \n"		// The entry point for our vertex shader.
+//		  + "{                              \n"
+//		  + "   v_Color = a_Color;          \n"		// Pass the color through to the fragment shader.
+//		  											// It will be interpolated across the triangle.
+//		  + "   gl_Position = u_MVPMatrix   \n" 	// gl_Position is a special variable used to store the final position.
+//		  + "               * a_Position;   \n"     // Multiply the vertex by the matrix to get the final point in
+//		  + "}                              \n";    // normalized screen coordinates.
+
 		final String fragmentShader =
-			"#version 300 es                \n"    //set the version.
-		  +	"precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
-													// precision in the fragment shader.				
-		  + "in vec4 v_Color;               \n"		// This is the color from the vertex shader interpolated across the
-		  											// triangle per fragment.
-		  + "out vec4 gl_FragColor;         \n"
-		  + "void main()                    \n"		// The entry point for our fragment shader.
-		  + "{                              \n"
-		  + "   gl_FragColor = v_Color;     \n"		// Pass the color directly through the pipeline.		  
-		  + "}                              \n";												
-		
+			//works on android 15, it's the v2 code.
+			"precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
+				// precision in the fragment shader.
+				+ "varying vec4 v_Color;          \n"		// This is the color from the vertex shader interpolated across the
+				// triangle per fragment.
+				+ "void main()                    \n"		// The entry point for our fragment shader.
+				+ "{                              \n"
+				+ "   gl_FragColor = v_Color;     \n"		// Pass the color directly through the pipeline.
+				+ "}                              \n";
+
+		//works on a pixel4a running android 13, but fails on 15 (on pixel 7 and 8 devices).
+//			"#version 300 es                \n"    //set the version.
+//		  +	"precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
+//													// precision in the fragment shader.
+//		  + "in vec4 v_Color;               \n"		// This is the color from the vertex shader interpolated across the
+//		  		  											// triangle per fragment.
+//		  + "out vec4 gl_FragColor;         \n"
+//		  + "void main()                    \n"		// The entry point for our fragment shader.
+//		  + "{                              \n"
+//		  + "   gl_FragColor = v_Color;     \n"		// Pass the color directly through the pipeline.
+//		  + "}                              \n";
+
 		// Load in the vertex shader.
 		int vertexShaderHandle = GLES30.glCreateShader(GLES30.GL_VERTEX_SHADER);
 
-		if (vertexShaderHandle != 0) 
+		if (vertexShaderHandle != 0)
 		{
 			// Pass in the shader source.
 			GLES30.glShaderSource(vertexShaderHandle, vertexShader);
@@ -207,8 +239,8 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 			GLES30.glGetShaderiv(vertexShaderHandle, GLES30.GL_COMPILE_STATUS, compileStatus, 0);
 
 			// If the compilation failed, delete the shader.
-			if (compileStatus[0] == 0) 
-			{				
+			if (compileStatus[0] == 0)
+			{
 				GLES30.glDeleteShader(vertexShaderHandle);
 				vertexShaderHandle = 0;
 			}
@@ -218,11 +250,11 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 		{
 			throw new RuntimeException("Error creating vertex shader.");
 		}
-		
+
 		// Load in the fragment shader shader.
 		int fragmentShaderHandle = GLES30.glCreateShader(GLES30.GL_FRAGMENT_SHADER);
 
-		if (fragmentShaderHandle != 0) 
+		if (fragmentShaderHandle != 0)
 		{
 			// Pass in the shader source.
 			GLES30.glShaderSource(fragmentShaderHandle, fragmentShader);
@@ -235,8 +267,8 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 			GLES30.glGetShaderiv(fragmentShaderHandle, GLES30.GL_COMPILE_STATUS, compileStatus, 0);
 
 			// If the compilation failed, delete the shader.
-			if (compileStatus[0] == 0) 
-			{				
+			if (compileStatus[0] == 0)
+			{
 				GLES30.glDeleteShader(fragmentShaderHandle);
 				fragmentShaderHandle = 0;
 			}
@@ -246,22 +278,22 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 		{
 			throw new RuntimeException("Error creating fragment shader.");
 		}
-		
+
 		// Create a program object and store the handle to it.
 		int programHandle = GLES30.glCreateProgram();
-		
-		if (programHandle != 0) 
+
+		if (programHandle != 0)
 		{
 			// Bind the vertex shader to the program.
-			GLES30.glAttachShader(programHandle, vertexShaderHandle);			
+			GLES30.glAttachShader(programHandle, vertexShaderHandle);
 
 			// Bind the fragment shader to the program.
 			GLES30.glAttachShader(programHandle, fragmentShaderHandle);
-			
+
 			// Bind attributes
 			GLES30.glBindAttribLocation(programHandle, 0, "a_Position");
 			GLES30.glBindAttribLocation(programHandle, 1, "a_Color");
-			
+
 			// Link the two shaders together into a program.
 			GLES30.glLinkProgram(programHandle);
 
@@ -270,29 +302,29 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 			GLES30.glGetProgramiv(programHandle, GLES30.GL_LINK_STATUS, linkStatus, 0);
 
 			// If the link failed, delete the program.
-			if (linkStatus[0] == 0) 
-			{				
+			if (linkStatus[0] == 0)
+			{
 				GLES30.glDeleteProgram(programHandle);
 				programHandle = 0;
 			}
 		}
-		
+
 		if (programHandle == 0)
 		{
 			throw new RuntimeException("Error creating program.");
 		}
-        
+
         // Set program handles. These will later be used to pass in values to the program.
-        mMVPMatrixHandle = GLES30.glGetUniformLocation(programHandle, "u_MVPMatrix");        
+        mMVPMatrixHandle = GLES30.glGetUniformLocation(programHandle, "u_MVPMatrix");
         mPositionHandle = GLES30.glGetAttribLocation(programHandle, "a_Position");
-        mColorHandle = GLES30.glGetAttribLocation(programHandle, "a_Color");        
-        
+        mColorHandle = GLES30.glGetAttribLocation(programHandle, "a_Color");
+
         // Tell OpenGL to use this program when rendering.
-        GLES30.glUseProgram(programHandle);        
-	}	
-	
+        GLES30.glUseProgram(programHandle);
+	}
+
 	@Override
-	public void onSurfaceChanged(GL10 glUnused, int width, int height) 
+	public void onSurfaceChanged(GL10 glUnused, int width, int height)
 	{
 		// Set the OpenGL viewport to the same size as the surface.
 		GLES30.glViewport(0, 0, width, height);
@@ -306,69 +338,69 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer
 		final float top = 1.0f;
 		final float near = 1.0f;
 		final float far = 10.0f;
-		
+
 		Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
-	}	
+	}
 
 	@Override
-	public void onDrawFrame(GL10 glUnused) 
+	public void onDrawFrame(GL10 glUnused)
 	{
-		GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);			        
-                
+		GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
+
         // Do a complete rotation every 10 seconds.
         long time = SystemClock.uptimeMillis() % 10000L;
         float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
-        
+
         // Draw the triangle facing straight on.
         Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);        
+        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);
         drawTriangle(mTriangle1Vertices);
-        
+
         // Draw one translated a bit down and rotated to be flat on the ground.
         Matrix.setIdentityM(mModelMatrix, 0);
         Matrix.translateM(mModelMatrix, 0, 0.0f, -1.0f, 0.0f);
         Matrix.rotateM(mModelMatrix, 0, 90.0f, 1.0f, 0.0f, 0.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);        
+        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);
         drawTriangle(mTriangle2Vertices);
-        
+
         // Draw one translated a bit to the right and rotated to be facing to the left.
         Matrix.setIdentityM(mModelMatrix, 0);
         Matrix.translateM(mModelMatrix, 0, 1.0f, 0.0f, 0.0f);
         Matrix.rotateM(mModelMatrix, 0, 90.0f, 0.0f, 1.0f, 0.0f);
         Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);
         drawTriangle(mTriangle3Vertices);
-	}	
-	
+	}
+
 	/**
 	 * Draws a triangle from the given vertex data.
-	 * 
+	 *
 	 * @param aTriangleBuffer The buffer containing the vertex data.
 	 */
 	private void drawTriangle(final FloatBuffer aTriangleBuffer)
-	{		
+	{
 		// Pass in the position information
 		aTriangleBuffer.position(mPositionOffset);
         GLES30.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES30.GL_FLOAT, false,
-        		mStrideBytes, aTriangleBuffer);        
-                
-        GLES30.glEnableVertexAttribArray(mPositionHandle);        
-        
+        		mStrideBytes, aTriangleBuffer);
+
+        GLES30.glEnableVertexAttribArray(mPositionHandle);
+
         // Pass in the color information
         aTriangleBuffer.position(mColorOffset);
         GLES30.glVertexAttribPointer(mColorHandle, mColorDataSize, GLES30.GL_FLOAT, false,
-        		mStrideBytes, aTriangleBuffer);        
-        
+        		mStrideBytes, aTriangleBuffer);
+
         GLES30.glEnableVertexAttribArray(mColorHandle);
-        
+
 		// This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix
         // (which currently contains model * view).
         Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
-        
+
         // This multiplies the modelview matrix by the projection matrix, and stores the result in the MVP matrix
         // (which now contains model * view * projection).
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
 
         GLES30.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
-        GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 3);                               
+        GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 3);
 	}
 }
