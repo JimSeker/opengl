@@ -20,7 +20,9 @@ OpenGl Examples
 **OpenGL 3.X examples:**
 
 intended to get you started in OpenGL 3.0, but don't provide any depth of coverage.  
-<B>NOTE, in android 15 some of these examples now fail and I do not know why.  They work correctly on a pixel4a running android 13, but then fail to run pixel 7 and 8 devices.   likely there is a error in library? android states, opengl is no longer under active developement.   Vulkan is the new graphics package and opengl is on the way out.  Use at your own risk or maybe v2 instead.</B>
+<code style="color : red">
+NOTE, in android 15 some of these examples now fail and I do not know why.  They work correctly on a pixel4a running android 13, but then fail to run pixel 7 and 8 devices.   likely there is a error in library? android states, opengl is no longer under active developement.   Vulkan is the new graphics package and opengl is on the way out.  Use at your own risk or maybe v2 instead.
+</code>
 
 `HelloOpenGLES30` is Google’s basic framework example from 2.0, updated to OpenGL ES 3.0.  2D square and triangle with touch events to spin the triangle.  API 18+
 
