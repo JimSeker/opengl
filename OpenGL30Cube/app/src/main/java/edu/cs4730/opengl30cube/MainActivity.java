@@ -13,6 +13,8 @@ import android.view.View;
  *
  *  The code here, simply makes sure that opengl 3.0 is available and starts up
  *  the the surfaceview class I extended.
+ *
+ * this works on android 15 devices (pixel 7 and 8).
  */
 
 public class MainActivity extends Activity {

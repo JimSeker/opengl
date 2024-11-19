@@ -12,6 +12,8 @@ import android.util.Log;
  *
  *  The code here, simply makes sure that opengl 3.0 is available and starts up
  *  the TextureView class I extended.
+ *
+ *  This is working on android 15 devices.
  */
 
 public class MainActivity extends AppCompatActivity {

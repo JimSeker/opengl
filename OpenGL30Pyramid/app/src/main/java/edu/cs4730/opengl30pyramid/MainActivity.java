@@ -8,6 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+/**
+ * this is simple test to show that pyramid in 3D space can be drawn, like the cube.
+ *
+ * note this is working on android 15 devices.
+ */
+
 public class MainActivity extends Activity {
 
     @Override
