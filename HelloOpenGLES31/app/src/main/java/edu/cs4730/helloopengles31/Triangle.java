@@ -31,7 +31,7 @@ public class Triangle {
     private final String vertexShaderCode =
         // This matrix member variable provides a hook to manipulate
         // the coordinates of the objects that use this vertex shader
-        "#version 300 es\n"+
+        "#version 310 es\n"+
             "uniform mat4 uMVPMatrix;\n" +
             "in vec4 vPosition;\n" +
             "void main() {\n" +
@@ -42,13 +42,14 @@ public class Triangle {
             "}\n";
 
     private final String fragmentShaderCode =
-        "#version 310 es \n"+
-            "precision mediump float; \n" +
-            "in uniform vec4 vColor;\n" +
-            "out vec4 gl_FragColor;\n" +
-            "void main() {\n" +
-            "  gl_FragColor = vColor;\n" +
-            "}\n";
+        "#version 310 es		 			          	\n"
+            + "precision mediump float;					  	\n"
+            + "uniform vec4 vColor;	 			 		  	\n"
+            + "out vec4 fragColor;	 			 		  	\n"
+            + "void main()                                  \n"
+            + "{                                            \n"
+            + "  fragColor = vColor;                    	\n"
+            + "}                                            \n";
 
     private final FloatBuffer vertexBuffer;
     private final int mProgram;
