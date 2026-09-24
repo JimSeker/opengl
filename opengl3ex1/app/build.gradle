@@ -4,6 +4,7 @@ android {
     compileSdk = 37
 
     defaultConfig {
+        applicationId = "edu.cs4730.opengl3ex1"
         minSdk = 32
         targetSdk = 37
         versionCode = 1

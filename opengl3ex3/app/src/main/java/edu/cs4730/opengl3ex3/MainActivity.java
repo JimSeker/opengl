@@ -32,24 +32,28 @@ package edu.cs4730.opengl3ex3;
 //            http://my.safaribooksonline.com/book/animation-and-3d/9780133440133
 //
 
-
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 /**
  * this example draws a simple triangle (blue) on a white background.
  * That's it.  But it takes a lot of code to get that far.   Most of the work in
- * in the render class (HelloTriangleRender).   since it doesn't move or respond, there
+ * the render class (HelloTriangleRender).   since it doesn't move or respond, there
  * is only a render class.
- *
+ * <p>
  * Activity class for example program that detects OpenGL ES 3.0.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private final int CONTEXT_CLIENT_VERSION = 3;
 
@@ -70,11 +74,30 @@ public class MainActivity extends Activity {
         }
 
         setContentView(mGLSurfaceView);
+
+        // 1. Hide the Action Bar if you are using a theme that includes one
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        //2. Configure the window for immersive mode
+        Window window = getWindow();
+        WindowInsetsControllerCompat controller = WindowCompat.getInsetsController(window, window.getDecorView());
+
+        if (controller != null) {
+            // Hide both the status bar and the navigation bar
+            controller.hide(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars());
+
+            // Set the behavior to "behavior system bars transient hopes"
+            // This allows the user to swipe from the edge to temporarily reveal the bars
+            controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        }
+
     }
 
     private boolean detectOpenGLES30() {
         ActivityManager am =
-                (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo info = am.getDeviceConfigurationInfo();
         return (info.reqGlEsVersion >= 0x30000);
     }
