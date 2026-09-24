@@ -1,24 +1,27 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 32
+    compileSdk = 37
 
     defaultConfig {
-        applicationId "com.example.android.opengl30"
-        minSdkVersion 26
-        targetSdkVersion 32
-        versionCode 1
-        versionName "1.0"
+        applicationId ="com.example.android.opengl30"
+        minSdk = 32
+        targetSdk = 37
+        versionCode =1
+        versionName ="1.0"
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.example.android.opengl30'
+    namespace ='com.example.android.opengl30'
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
+    implementation("com.google.android.material:material:1.14.0")
+    implementation("androidx.activity:activity:1.13.0")
 }
