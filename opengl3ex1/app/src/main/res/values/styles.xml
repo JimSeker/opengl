@@ -1,8 +1,9 @@
 <resources>
 
     <!-- Base Application theme. -->
-    <style name="AppTheme" parent="android:Theme.Light.NoTitleBar.Fullscreen">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
 </resources>
+
