@@ -1,23 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 35
+    compileSdk = 37
 
     defaultConfig {
-        applicationId "edu.cs4730.opengl2ex1"
-        minSdkVersion 29
-        targetSdk 35
-        versionCode 1
-        versionName "1.0"
+        applicationId ="edu.cs4730.opengl2ex1"
+        minSdk = 32
+        targetSdk = 37
+        versionCode = 1
+        versionName = "1.0"
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
         }
     }
-    namespace 'edu.cs4730.opengl2ex1'
+    namespace ='edu.cs4730.opengl2ex1'
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

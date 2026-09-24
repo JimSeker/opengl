@@ -9,14 +9,14 @@ import android.os.Bundle;
 import android.view.Window;
 
 /**
- * This example use openGL v2.0  
- *   It creates a render, instead of extending the GLSurfaceView 
+ * This example use openGL v2.0
+ *   It creates a render, instead of extending the GLSurfaceView
  *         see ex2 for and extended GLsurfaceView
- *         
+ *
  *   This code is based off of http://www.learnopengles.com/android-lesson-one-getting-started/
- *   
- *   Note, there is no xml layout for this example.  It's all done in onCreate and the render.
- *         
+ *
+ *   Note, there is no XML layout for this example.  It's all done in onCreate and the render.
+ *
  */
 
 public class MainActivity extends Activity {
@@ -65,6 +65,6 @@ public class MainActivity extends Activity {
 		// The activity must call the GL surface view's onPause() on activity onPause().
 		super.onPause();
 		//mGLSurfaceView.onPause();
-	} 
+	}
 
 }
