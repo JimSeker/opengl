@@ -1,11 +1,16 @@
 package edu.cs4730.opengl30cubetextureview;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 
 /*
  *  This is a example of a cube that rotates and moves.
@@ -37,6 +42,25 @@ public class MainActivity extends AppCompatActivity {
             finish();
 
         }
+
+        // 1. Hide the Action Bar if you are using a theme that includes one
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        //2. Configure the window for immersive mode
+        Window window = getWindow();
+        WindowInsetsControllerCompat controller = WindowCompat.getInsetsController(window, window.getDecorView());
+
+        if (controller != null) {
+            // Hide both the status bar and the navigation bar
+            controller.hide(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars());
+
+            // Set the behavior to "behavior system bars transient hopes"
+            // This allows the user to swipe from the edge to temporarily reveal the bars
+            controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        }
+
 
     }
 

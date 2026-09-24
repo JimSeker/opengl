@@ -1,5 +1,6 @@
 package edu.cs4730.opengl30cubetextureview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.util.AttributeSet;
@@ -7,6 +8,8 @@ import android.opengl.GLUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.TextureView;
+
+import androidx.annotation.NonNull;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -90,6 +93,7 @@ public class myGLTextureView extends TextureView implements TextureView.SurfaceT
     private float mPreviousX;
     private float mPreviousY;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         // MotionEvent reports input details from the touch screen
@@ -118,7 +122,7 @@ public class myGLTextureView extends TextureView implements TextureView.SurfaceT
     }
 
     @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+    public void onSurfaceTextureAvailable(@NonNull SurfaceTexture surface, int width, int height) {
         startThread(surface, width, height, targetFps);
     }
 
@@ -135,7 +139,7 @@ public class myGLTextureView extends TextureView implements TextureView.SurfaceT
 
 
     @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+    public void onSurfaceTextureSizeChanged(@NonNull SurfaceTexture surface, int width, int height) {
         setDimensions(width, height);
         if(mRenderer != null)
             mRenderer.onSurfaceChanged(mGl, width, height);
@@ -150,7 +154,7 @@ public class myGLTextureView extends TextureView implements TextureView.SurfaceT
     }
 
     @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+    public boolean onSurfaceTextureDestroyed(@NonNull SurfaceTexture surface) {
         Log.e(TAG, "SurfaceTExture Destroyed call.");
         stopThread();
         return false;
@@ -353,7 +357,7 @@ public class myGLTextureView extends TextureView implements TextureView.SurfaceT
     }
 
     @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+    public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {
     }
 
 }

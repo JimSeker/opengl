@@ -35,7 +35,7 @@ public class myRenderer implements GLSurfaceView.Renderer {
 
     //
     public myRenderer(Context context) {
-        //cube can not be instianated here, because of "no egl context"  no clue.
+        //cube can not be instantiated here, because of "no egl context"  no clue.
         //do it in onSurfaceCreate and it is fine.  odd, but workable solution.
     }
     ///

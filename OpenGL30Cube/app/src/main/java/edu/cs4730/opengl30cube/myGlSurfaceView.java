@@ -5,7 +5,7 @@ import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 /*
- * simple extention of the GLsurfaceview.  basically setup to use opengl 3.0
+ * simple extension of the GLsurfaceview.  basically setup to use opengl 3.0
  * and set some configs.  This would be where the touch listener is setup to do something.
  *
  * It also declares and sets the render.

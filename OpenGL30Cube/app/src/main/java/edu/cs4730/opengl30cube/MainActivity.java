@@ -1,23 +1,27 @@
 package edu.cs4730.opengl30cube;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.Window;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 /*
- *  This is a example of a cube that rotates and moves.
+ *  This is an example of a cube that rotates and moves.
  *
  *  The code here, simply makes sure that opengl 3.0 is available and starts up
- *  the the surfaceview class I extended.
+ *  the surfaceview class I extended.
  *
  * this works on android 15 devices (pixel 7 and 8).
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,24 @@ public class MainActivity extends Activity {
             finish();
 
         }
+        // 1. Hide the Action Bar if you are using a theme that includes one
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        //2. Configure the window for immersive mode
+        Window window = getWindow();
+        WindowInsetsControllerCompat controller = WindowCompat.getInsetsController(window, window.getDecorView());
+
+        if (controller != null) {
+            // Hide both the status bar and the navigation bar
+            controller.hide(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars());
+
+            // Set the behavior to "behavior system bars transient hopes"
+            // This allows the user to swipe from the edge to temporarily reveal the bars
+            controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        }
+
 
     }
 
@@ -40,20 +62,6 @@ public class MainActivity extends Activity {
                 (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo info = am.getDeviceConfigurationInfo();
         return (info.reqGlEsVersion >= 0x30000);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
     }
 
 }
